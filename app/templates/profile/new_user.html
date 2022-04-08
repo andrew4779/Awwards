@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+
+{{form.media}}
+    <div class="container" style="background-color: rgb(129, 209, 63);">
+        <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <br>
+            <input type="submit" class="btn btn-outline-info btn-lg" value="Edit profile">
+        </form>
+    </div>
+{% endblock %}
