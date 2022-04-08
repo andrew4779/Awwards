@@ -1,66 +1,45 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
 {% block content %}
-<!-- blogs -->
-<section class="blog-section" id="posts">
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <h2 class="display-6 mt-4 headings">
-                    {% if message %}
-                      <span class="text-bold">{{ message }}</span>
-                    {% endif %}
-                </h2>
-            </div>
-            <div class="col-md-2"></div>
-        </div>
-        <div class="row mt-4">
-            {% for project in projects %}
-            <div class="col-md-12 col-lg-3">
-                <div class="card mb-4 post-card">
-                    <img src="{{ project.image.url }}"
-                        class="card-img-top" alt="Personal">
-                    <div class="card-body">
-                        <a href="{% url 'project_details' project.id %}">
-                            <h6 class="fade-item mb-2">{{ project.title }}</h6>
-                            <div class="d-flex justify-content-between location-date">
-                                <div>
-                                    <p class="text-uppercase">{{ project.location }}</p>
-                                </div>
-                                <div>
-                                    <p>{{ project.date|date}}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between mt-2">
-                                <div class="d-flex justify-content-start">
-                                    <div>
-                                        <!-- check if author image exists else display a placeholder -->
-                                        {% if project.user.profile_image %}
-                                        <img src="{{ project.user.profile_image.url }}"
-                                            class="poster-img" alt="Author">
-                                        {% else %}
-                                        <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
-                                            class="poster-img" alt="Author">
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        <p class="author mt-2 text-uppercase"><strong>BY <strong>{{ project.user.first_name }} {{ project.user.last_name }}</strong></strong></p>
-                                    </div>
-                                </div>
-                                <div class="display-on-hover">
-                                    <a href="{% url 'project_details' project.id %}" class="btn btn-custome"><small>Vote Now</small></a>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
 
+<div class="container" style="background-color: rgb(45, 221, 29); color:aliceblue;">
+    <div class="row">
+        {% if projects %}
+        <p>There are {{ projects | length }} projects.</p>
+        {% else %}
+        <p>No project found</p>
+        {% endif %}
+    </div>
+
+    {% if projects %}
+    {% for project in projects %}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-image">
+                    <img class="profile-image" src="{{ project.author.profile.image.url }}">
+                </div>
+                <h1>{{project.author}}</h1>
+                <img class="w-100" src="{{project.image.url}}" alt="projects">
+                <br><br>
+                <h1 class="ml-3">Project Title</h1>
+                <hr>
+                <h4 class="mt-3 ml-3"> {{project.title}}</h4>
+                <h1 class="ml-3 mt-3">Project Description</h1>
+                <hr>
+                <h4 class="mt-3 ml-5">~ {{project.description}}</h>
+                    <hr>
+                    <h3 class="mt-5 ml-5 text-info">Posted On {{project.created_date}}</h3>
+                    <a class="ml-5 text-black" href="{{project.link}}"><input class="btn btn-info text-black"
+                            type="button" value="Visit Site"></a>
+
+            </div>
         </div>
     </div>
-</section>
+    {% endfor %}
+    {% endif %}
 
-
+</div>
+</div>
 {% endblock %}

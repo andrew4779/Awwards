@@ -1,196 +1,49 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load ratings %}
 {% block content %}
-<!-- single post details -->
-<!-- check if image exists -->
+<hr class="mt-5">
+<div class="container" style="background-color:rgb(88, 224, 34); color:aliceblue;">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="profile-img">
+        <img class="profile-image" src="{{ project.author.profile.image.url }}" alt="img"
+          style="border-radius: 50%; height:4rem; width:4rem;">
+        <h2 class="account-header mb-2">{{project.author}}</h2>
+      </div>
+      <img src="{{project.image.url}}" class=" mt-2 w-100" alt=""><hr class="mt-5">
+      <a href="{{project.link}}" target="_blank"><input class="btn btn-info mt-3" type="button" value="Visit Site"></a>
 
-        <div class="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 text-center mt-5">
-                        <div class="single-content">
-                            <h2 class="display-6 mt-4 headings">
-                                {{ project.title }}
-                            </h2>
-                            <div class="author mt-5 mb-5">
-                                <p>
-                                    By {{ project.user.first_name }} {{ project.user.last_name }}
-                                </p>
-                                <!-- check if author profile exists -->
-                                {% if project.user.profile_pic_path %}
-                                <img src="{{ post.user.profile_pic_path }}" alt="author" class="author-img mt-3">
-                                {% else %}
-                                <img src="https://image.pngaaa.com/303/1721303-middle.png" alt="author"
-                                    class="author-img mt-3 mb-3">
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="blog-container p-5">
-        <div class="container">
+    </div>
+
+    <div class="col-md-4">
+      <h1 class="ml-3">Project Title</h1>
+      <hr>
+      <p class="mt-5 ml-5">{{project.title}}
+      <p><br>
+      <h1 class="ml-3">Project Description</h1>
+      <hr>
+      <p class="mt-2"> {{project.description}}</p>
+      <hr>
+      <h4 class="text-info">Posted On: {{project.created_date}}</h4>
+
+    </div>
+     <div class="mt-4 pt-4">
             <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        {{ project.description|safe }}
-                    </p>
-                </div>
+              <div class="col-md-4">
+                <h4>Design Rating</h4>
+                {% ratings project %}
+              </div>
+              <div class="col-md-4">
+                <h4>Usability Rating</h4>
+                {% ratings project %}
+              </div>
+              <div class="col-md-4">
+                <h4>Content Rating</h4>
+                {% ratings project %}
+              </div>
             </div>
-        </div>
-    </section>
-
-    <section class="comments-container mb-2">
-        <div class="container">
-            <div class="comments">
-                <div class="row">
-                    <div class="col-md-12">
-                        {% if success %}
-                        <div class="alert alert-success" role="alert">
-                            {{success}}
-                        </div>
-                        {% elif danger %}
-                        <div class="alert alert-danger" role="alert">
-                            {{danger}}
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <style>
-                    .btn-design,
-                    .btn-design:hover {
-                    background-color: transparent;
-                    color: white;
-                    height: 60px;
-                    width: 60px;
-                    font-weight: 800;
-                    border: 2px solid rgb(143, 30, 30);
-                    }
-
-                    .btn-usability,
-                    .btn-usability:hover {
-                    background-color: transparent;
-                    color: white;
-                    border-radius: 50%;
-                    font-weight: 800;
-                    height: 60px;
-                    width: 60px;
-                    border: 2px solid rgb(148, 148, 4);
-                    }
-
-                    .btn-content,
-                    .btn-content:hover {
-                    background-color: transparent;
-                    color: white;
-                    border-radius: 50%;
-                    font-weight: 800;
-                    height: 60px;
-                    width: 60px;
-                    border: 2px solid rgb(0, 174, 255);
-                    }
-
-                </style>
-                <div class="row card p-3">
-                    <!-- <div class="card-header">
-                        <h3>USER VOTES</h3>
-                    </div> -->
-                    {% for rate in rating %}
-                    <div class="col-md-12">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <div class="d-flex justify-content-start">
-                                    <div>
-                                        <img src="https://assets.awwwards.com/awards/media/cache/thumb_user_70/avatar/1118370/60a37004dd5ed949501371.png"
-                                            alt="">
-                                    </div>
-                                    <div class="m-2">
-                                        <h5 class="text-capitalize">{{ rate.user.first_name }} {{ rate.user.last_name }}</h5>
-                                        <p><a class="text-primary text-capitalize">{{ rate.user.username }}</a></p>
-                                        <span class="badge rounded-pill bg-info text-white">{{ rate.avg_rate }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="d-flex justify-content-center text-center">
-                                    <div class="m-1">
-                                        <a class="btn btn-design"><span class="text-dark">{{ rate.design_rate  }}</span></a> <br>
-                                        <span>Design</span>
-                                    </div>
-                                    <div class="m-1">
-                                        <a class="btn btn-usability"><span class="text-dark">{{ rate.usability_rate }}</span></a> <br>
-                                        <span>Usability</span>
-                                    </div>
-                                    <div class="m-1">
-                                        <a class="btn btn-content"><span class="text-dark">{{ rate.content_rate }}</span></a> <br>
-                                        <span>Content</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    {% empty %}
-                    <div class="col-md-12 text-center not-found">
-                        <i class="fa fa-exclamation"></i>
-                        <p>No votes yet!</p>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        {% if user.is_authenticated %}
-                        <div class="d-grid gap-2 mt-4">
-                            <button class="btn" type="button" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Vote</button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Vote</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{% url 'rate_project' project.id %}" method="post">
-                                                {% csrf_token %}
-                                                <div class="mb-3">
-                                                    <label for="Design">Design</label>
-                                                    <input type="number" class="form-control" name="design" min="0"
-                                                        max="10" value="0">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="Usability">Usability</label>
-                                                    <input type="number" class="form-control" name="usability" min="0"
-                                                        max="10" value="0">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="Content">Content</label>
-                                                    <input type="number" class="form-control" id="Content" min="0"
-                                                        max="10" value="0" name="content">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% else %}
-                        <div class="d-grid gap-2 mt-4">
-                            <a class="btn" href="{% url 'login' %}">Sign In to Vote</a>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    {% endblock %}
+          </div>
+  </div>
+</div>
+{% endblock %}

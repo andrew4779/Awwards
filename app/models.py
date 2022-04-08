@@ -1,100 +1,68 @@
+from __future__ import unicode_literals
 from django.db import models
-import datetime as dt
-
-# cloudinary
-from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch  import receiver
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
+# Create your models here.
 
-# project models
-class Project(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=250)
-    description = models.TextField()
-    image = CloudinaryField("image")
-    url = models.URLField(blank=True)
-    location = models.CharField(max_length=100, default="Nairobi")
-    # usability_rate = models.IntegerField(default=0, blank=True, null=True)
-    # content_rate = models.IntegerField(default=0, blank=True, null=True)
-    date = models.DateTimeField(auto_now_add=True, null=True)
-
-    @classmethod
-    def search_by_title(cls, search_term):
-        projects = cls.objects.filter(title__icontains=search_term)
-        return projects
-
-    @classmethod
-    def get_project_by_id(cls, id):
-        project = cls.objects.get(id=id)
-        return project
-
-    @classmethod
-    def get_all_projects(cls):
-        projects = cls.objects.all()
-        return projects
-
-    @classmethod
-    def get_all_projects_by_user(cls, user):
-        projects = cls.objects.filter(user=user)
-        return projects
-
-    # update project
-    def update_project(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-        self.save()
-
-    def save_project(self):
-        self.save()
-
-    def delete_project(self):
-        self.delete()
-
-    def __str__(self):
-        return self.title
-    
-
-# profile models
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_photo = CloudinaryField("image")
-    bio = models.TextField(max_length=250, blank=True, null=True)
-    contact = models.CharField(max_length=250, blank=True, null=True)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics/')
+    bio = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    class Meta:
+        db_table = 'profile'
+
+    @receiver(post_save, sender=User)
+    def update_create_profile(sender,instance,created, **kwargs):
+        try:
+            instance.profile.save()
+        except ObjectDoesNotExist:
+            Profile.objects.create(user=instance)
+
 
     def save_profile(self):
         self.save()
 
-    def delete_profile(self):
-        self.delete()
 
-    @classmethod
-    def filter_by_id(cls, id):
-        profile = Profile.objects.filter(user=id).first()
-        return profile
+class Projects(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    image = models.ImageField(upload_to='profile_pics/')
+    description = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=255)
+    link = models.URLField()
+    author_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank = True, null=True)
 
-    def __str__(self):
-        return self.user.username
-
-# rating models
-class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    design_rate = models.IntegerField(default=0, blank=True, null=True)
-    usability_rate = models.IntegerField(default=0, blank=True, null=True)
-    content_rate = models.IntegerField(default=0, blank=True, null=True)
-    avg_rate = models.IntegerField(default=0, blank=True, null=True)
-    date = models.DateTimeField(auto_now_add=True, null=True)
-
-    def save_rating(self):
+    def save_project(self):
         self.save()
 
-    def delete_rating(self):
+    def __str__(self):
+        return f'{self.author} Post'
+
+    class Meta:
+        db_table = 'project'
+        ordering = ['-created_date']
+
+    def delete_project(self):
         self.delete()
 
     @classmethod
-    def filter_by_id(cls, id):
-        rating = Rating.objects.filter(id=id).first()
-        return rating
+    def search_projects(cls,search_term):
+        project = cls.objects.filter(title__icontains=search_term)
+        return project
 
-    def __str__(self):
-        return self.user.username
+    @classmethod
+    def get_project(cls,id):
+        try:
+            project = Projects.objects.get(pk=id)
+        except ObjectDoesNotExist:
+            raise Http404()
+        return Project

@@ -1,16 +1,13 @@
 from rest_framework import serializers
-from .models import Profile, Project
+from .models import *
 
 
-# profile serializer
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Projects
+        fields = ['title', 'description', 'image', 'author', 'created_date', 'author_profile', 'link']
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ("user", "profile_photo", "bio", "contact")
-
-
-# Project serializer
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ("user", "title", "description", "image", "url", "location", "date")
+        fields = ['user', 'image', 'bio']        

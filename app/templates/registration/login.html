@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="container" style="background-color: rgb(11, 19, 9); color:aliceblue;"><br><br>
+    <div class="row sign-up">
+        <div class="col-md-4">
+            {% if form.errors %}
+            <p class="small">Password or Username is incorrect</p>
+            {% endif %}
+            <div class="section">
+                <h1 style='text-align:center;'><b>Awwards</b></h1>
+                <div class="form-section">
+                    <form action="/accounts/login/" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-lg" value="Login">
+                        </div>
+                        <input type="hidden" name="next" value="{{next}}">
+                    </form>
+                </div>
+            </div>
+            <div class="section">
+                <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

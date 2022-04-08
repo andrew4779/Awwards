@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %}
+{% block content %}
+<div class="container" style="background-color: rgb(170, 226, 15); color:aliceblue;">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <form class="text-dark" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="SUBMIT">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="background-color: rgb(23, 26, 20); color:aliceblue;">
+    <div class="content-section">
+        <h2>You have successfully logged out</h2>
+        <div class="border-top pt-3">
+            <small class="text-muted"><a href="{% url 'login'%}" style="color: white;">You can access your account by logging in again</a></small>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
