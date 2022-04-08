@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container container-fluid">
+        <a class="navbar-brand" href="/">
+            Awwards
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <ul class="navbar-nav nav-right">
+                <li class="nav-item text-center">
+                    {% if user.is_authenticated %}
+                    <span class="nav-link text-dark"><a href="/profile" class="text-primary"><i
+                                class="fa fa-user-alt"></i><br><strong>{{ user.username }}</strong></a></span>
+                    {% else %}
+                    <span class="nav-link text-dark">ARE YOU A MEMBER? <a href="/accounts/login"
+                            class="text-primary"><strong>LOG IN</strong></a></span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

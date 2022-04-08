@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- homepage section -->
+<section class="homepage">
+    <div class="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 text-center">
+                    <div class="homepage-content">
+                        <a href="{% url 'project_details' project_home.id %}">
+                            <h1 class="text-white text-bold text-capitalize">
+                                {{project_home.title }}
+                            </h1>
+                            <p class="author-home mt-3">
+                                by
+                                <strong>
+                                    <a class="text-capitalize">{{project_home.user.username }}</a>
+                                </strong>
+                                <i>from</i>
+                                <strong class="text-capitalize">{{project_home.location }}</strong>
+                                <!-- with
+                                <strong>7.53</strong> -->
+                            </p>
+                            <div class="button-group mt-5">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <a class="btn btn-design"><span>{{ rating.design_rate }}</span></a> <br>
+                                        <span>Design</span>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-usability"><span>{{ rating.usability_rate }}</span></a> <br>
+                                        <span>Usability</span>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-content"><span>{{ rating.content_rate }}</span></a> <br>
+                                        <span>Content</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <!-- search input -->
+                                <form action="{% url 'search_project' %}" class="mt-5" >
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Search for Project..." aria-label="Search for..."
+                                            aria-describedby="basic-addon2" name="search_term">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="button">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- blogs -->
+<section class="blog-section" id="posts">
+    <div class="container mt-5">
+        
+        <div class="row mt-4">
+            {% for project in projects %}
+            <div class="col-md-12 col-lg-3">
+                <div class="card mb-4 post-card">
+                    <img src="{{ project.image.url }}"
+                        class="card-img-top" alt="Personal">
+                    <div class="card-body">
+                        <a href="{% url 'project_details' project.id %}">
+                            <h6 class="fade-item mb-2">{{ project.title }}</h6>
+                            <div class="d-flex justify-content-between location-date">
+                                <div>
+                                    <p class="text-uppercase">{{ project.location }}</p>
+                                </div>
+                                <div>
+                                    <p>{{ project.date|date}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <div class="d-flex justify-content-start">
+                                    <div>
+                                        <!-- check if author image exists else display a placeholder -->
+                                        {% if project.user.profile_image %}
+                                        <img src="{{ project.user.profile_image.url }}"
+                                            class="poster-img" alt="Author">
+                                        {% else %}
+                                        <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
+                                            class="poster-img" alt="Author">
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <p class="author mt-2 text-uppercase"><strong>BY <strong>{{ project.user.first_name }} {{ project.user.last_name }}</strong></strong></p>
+                                    </div>
+                                </div>
+                                <div class="display-on-hover">
+                                    <a href="{% url 'project_details' project.id %}" class="btn btn-custome"><small>Vote Now</small></a>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
