@@ -3,7 +3,7 @@
 {% block content %}
 
 {{form.media}}
-    <div class="container" style="background-color: rgb(129, 209, 63);">
+    <div class="container" style="background-color: rgb(47, 48, 47);">
         <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% bootstrap_form form %}
