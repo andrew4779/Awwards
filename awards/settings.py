@@ -136,6 +136,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
+# # configuring the location for media
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # adding config
 cloudinary.config(
   cloud_name = "dv5kkzgqy",

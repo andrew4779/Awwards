@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -6,8 +5,16 @@ from django.db.models.signals import post_save
 from django.dispatch  import receiver
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from cloudinary.models import CloudinaryField
+
 
 # Create your models here.
+
+class photos(models.Model):
+    # title field
+    title = models.CharField(max_length=100)
+    #image field
+    image = CloudinaryField('image')
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
