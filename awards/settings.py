@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import django_heroku
 
 
 # cloudinary
@@ -134,7 +135,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+# adding config
+cloudinary.config(
+  cloud_name = "dv5kkzgqy",
+  api_key = "132249491479223",
+  api_secret = "JorPJSDD7y84_8p_ELkEvGOVnnU",
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
