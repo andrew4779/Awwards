@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'cloudinary',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_registration',
     'star_ratings',
 
