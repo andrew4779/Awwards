@@ -3,9 +3,10 @@
 #### By **Andrew kimani**
 
 ## Description
-
+This is web application that allows you to view different projects that have been posted.The Projects can reviewed and rated according to usability, design and content.
 
 ## Setup/Installation Requirements
+
 * Clone the repo: 
 ```
 https://github.com/andrew4779/Awwards.git
