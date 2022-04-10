@@ -72,4 +72,4 @@ class Projects(models.Model):
             project = Projects.objects.get(pk=id)
         except ObjectDoesNotExist:
             raise Http404()
-        return Project
+        return Projects
