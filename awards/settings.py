@@ -141,12 +141,14 @@ STATIC_URL = 'static/'
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 # adding config
 cloudinary.config(
   cloud_name = "dv5kkzgqy",
   api_key = "132249491479223",
   api_secret = "JorPJSDD7y84_8p_ELkEvGOVnnU",
 )
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
