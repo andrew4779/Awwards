@@ -27,4 +27,5 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model= Projects
-        exclude= ['author', 'created_date', 'author_profile']             
+        exclude= ['author', 'created_date', 'author_profile']
+         
