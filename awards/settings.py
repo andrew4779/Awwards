@@ -24,7 +24,6 @@ import cloudinary.api
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -35,7 +34,6 @@ SECRET_KEY = 'django-insecure-mdyt1@_=uck!s1gqbpqvib0mbtpuncek12yt)@)_j#6bkr@wrb
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
