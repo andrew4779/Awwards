@@ -13,6 +13,7 @@ from cloudinary.models import CloudinaryField
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics/')
+    image = CloudinaryField('image')
     bio = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
@@ -36,6 +37,7 @@ class Profile(models.Model):
 class Projects(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     image = models.ImageField(upload_to='profile_pics/')
+    image = CloudinaryField('image')
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     title = models.CharField(max_length=255)

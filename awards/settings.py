@@ -151,9 +151,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # adding config
-cloudinary.config(
-  cloud_name = "dv5kkzgqy",
-  api_key = "132249491479223",
+cloudinary.config( 
+  cloud_name = "dv5kkzgqy", 
+  api_key = "132249491479223", 
   api_secret = "JorPJSDD7y84_8p_ELkEvGOVnnU",
 )
 
