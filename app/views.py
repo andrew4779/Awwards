@@ -134,3 +134,4 @@ class ProfileList(APIView):
         allprofiles = Profile.objects.all()
         serializers = ProfileSerializer(allprofiles, many=True)
         return Response(serializers.data)
+

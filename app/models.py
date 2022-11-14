@@ -69,3 +69,4 @@ class Projects(models.Model):
         except ObjectDoesNotExist:
             raise Http404()
         return Projects
+        
